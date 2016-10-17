@@ -40,10 +40,17 @@ where t1.bgate_area == 'E1';
 sqlite> .header on
 sqlite> .mode csv
 sqlite> .once airport_gz_passenger_predict.csv
-
+# 用9.11,12,13这3天数据.
 select round(avg(passenger_count),1) as passengerCount, upper(wifi_ap_tag) as WIFIAPTag,
 	'2016-09-14-' || substr(time, 12, 4) as slice10min   
 from wifi
 where substr(time, 6, 5) in ('09-11', '09-12', '09-13') and
+      substr(time, 12, 5) >= '15-00' and substr(time, 12, 5) < '18-00'
+group by 2,3;
+# 用9.12,13这2天数据。
+select round(avg(passenger_count),1) as passengerCount, upper(wifi_ap_tag) as WIFIAPTag,
+	'2016-09-14-' || substr(time, 12, 4) as slice10min   
+from wifi
+where substr(time, 6, 5) in ('09-12', '09-13') and
       substr(time, 12, 5) >= '15-00' and substr(time, 12, 5) < '18-00'
 group by 2,3;
