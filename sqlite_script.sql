@@ -47,10 +47,19 @@ from wifi
 where substr(time, 6, 5) in ('09-11', '09-12', '09-13') and
       substr(time, 12, 5) >= '15-00' and substr(time, 12, 5) < '18-00'
 group by 2,3;
+
 # 用9.12,13这2天数据。
 select round(avg(passenger_count),1) as passengerCount, upper(wifi_ap_tag) as WIFIAPTag,
 	'2016-09-14-' || substr(time, 12, 4) as slice10min   
 from wifi
 where substr(time, 6, 5) in ('09-12', '09-13') and
+      substr(time, 12, 5) >= '15-00' and substr(time, 12, 5) < '18-00'
+group by 2,3;
+
+# 9.18日第二轮，使用新数据。
+select round(avg(passenger_count),1) as passengerCount, upper(wifi_ap_tag) as WIFIAPTag,
+	'2016-09-25-' || substr(time, 12, 4) as slice10min   
+from wifi
+where substr(time, 6, 5) >= '09-11' and substr(time, 6, 5) <= '09-24' and
       substr(time, 12, 5) >= '15-00' and substr(time, 12, 5) < '18-00'
 group by 2,3;
