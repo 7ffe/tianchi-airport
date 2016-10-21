@@ -71,3 +71,8 @@ from wifi
 where substr(time, 6, 5) >= '09-19' and substr(time, 6, 5) <= '09-24' and
       substr(time, 12, 5) >= '15-00' and substr(time, 12, 5) < '18-00'
 group by 2,3;
+
+# 为KNeighbours准备数据。
+create table avg_14_days(score real, wifi_ap_tag text, time slice_10_min);
+.import round_2_0911_0924_airport_gz_passenger_predict_no_header.csv avg_14_days
+.once kn_raw.csv
